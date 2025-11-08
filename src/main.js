@@ -1,9 +1,19 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import {createApp} from 'vue';
+import App from './App.vue';
+import router from './router';
 
-const app = createApp(App)
+import {install as VueMonacoEditorPlugin} from '@guolao/vue-monaco-editor';
 
-app.use(router)
 
-app.mount('#app')
+const app = createApp(App);
+
+app.use(router);
+
+app.use(VueMonacoEditorPlugin, {
+  paths: {
+    // You can change the CDN config to load other versions
+    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.54.0/min/vs'
+  },
+});
+
+app.mount('#app');
