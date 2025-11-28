@@ -6,3 +6,17 @@ body, #app {
   margin: 0;
   padding: 0;
 }
+
+
+
+[dark] {
+  --primary-bg: black;  
+}
+
+:root {
+  --primary-bg: white;
+}
+
+body {
+  background-color: var(--xd);
+}

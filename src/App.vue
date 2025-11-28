@@ -44,11 +44,29 @@ const handleBeforeMount = monaco => {
 };
 
 
+var isDark = ref(false);
+
+function toggleDark() {
+    isDark.value = !isDark.value;
+    if (isDark.value) {
+        document.body.setAttribute("dark", "");
+    } else {
+        document.body.removeAttribute("dark");
+    }
+}
+
 </script>
 
 <template>
-    <div class="w-screen h-screen flex flex-row">
-        <div class="w-1/2 h-full">
+    <!-- Whole page -->
+     <div class="w-screen min-h-screen h-screen flex flex-col">
+        <header class="bg-purple-600 h-12">
+            
+            <button @click="toggleDark"> {{ isDark ? "LIGHT" : "DARK" }}</button>
+
+        </header>
+        <div class="h-full w-screen flex flex-row">
+            <div class="w-1/2 h-full">
             <vue-monaco-editor
                 v-model:value="code"
                 language="javascript"
@@ -57,10 +75,10 @@ const handleBeforeMount = monaco => {
                 @mount="handleMount"
                 @beforeMount="handleBeforeMount"
             />
+          </div>
+            <div class="w-1/2 h-full">
+                <ExampleChart/>
+            </div>
         </div>
-        <div class="w-1/2 h-full">
-            <ExampleChart/>
-        </div>
-    </div>
-
+     </div>
 </template>
