@@ -9,7 +9,7 @@ import SendIcon from "@/icons/SendIcon.vue";
 
 const code = ref(`
 /*
- * Notacja created by Xiko and MODERR XD
+ * Notacja created by Xiko and MODERR
  */
 
 // Example Bubble Sort
