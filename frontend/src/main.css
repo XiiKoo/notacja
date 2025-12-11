@@ -17,6 +17,23 @@ body, #app {
   --primary-bg: white;
 }
 
-body {
-  background-color: var(--xd);
+@font-face {
+  font-family: "Burbank Big Condensed Bold";
+  font-style: normal;
+  font-weight: auto;
+  font-display: swap;
+  src: url("/fonts/BurbankBigCondensedBold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Minecraft";
+  font-style: normal;
+  font-weight: auto;
+  font-display: swap;
+  src: url("/fonts/MinecraftRegular.otf") format("opentype");
+}
+
+@theme {
+  --font-burbank: "Burbank Big Condensed Bold";
+  --font-minecraft: "Minecraft";
 }

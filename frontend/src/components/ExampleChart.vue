@@ -1,5 +1,5 @@
 <template>
-    <VChart class="chart" :option="option"/>
+    <VChart ref="chartRef" class="chart" :option="option"/>
 </template>
 
 <script setup>
@@ -7,7 +7,7 @@ import {use} from "echarts/core";
 import {CanvasRenderer} from "echarts/renderers";
 import {LineChart} from "echarts/charts";
 import VChart, {THEME_KEY} from "vue-echarts";
-import {ref, provide} from "vue";
+import {ref, provide, onMounted, onBeforeUnmount} from "vue";
 import {DatasetComponent, GridComponent, LegendComponent} from "echarts/components";
 
 use([
@@ -20,7 +20,10 @@ use([
 
 provide(THEME_KEY, "dark");
 
+const chartRef = ref(null);
+
 const option = ref({
+    backgroundColor: "transparent",
     xAxis: {
         type: 'category',
         data: ['A', 'B', 'C', 'D', 'E', 'F']
@@ -31,15 +34,28 @@ const option = ref({
     series: [
         {
             data: [1, 4, 9, 16, 25, 36],
-            type: 'line'
+            type: 'line',
+            smooth: true,
         }
     ]
+});
+
+function handleResize() {
+    chartRef.value?.resize();
+}
+
+onMounted(() => {
+    window.addEventListener("resize", handleResize);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("resize", handleResize);
 });
 </script>
 
 <style scoped>
 .chart {
-    height: 30vh;
-    width: 30vw;
+    height: 100%;
+    width: 100%;
 }
 </style>

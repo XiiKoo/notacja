@@ -1,84 +1,74 @@
 <script setup>
-import {ref, shallowRef} from 'vue';
+import {ref} from 'vue';
+
 import ExampleChart from "@/components/ExampleChart.vue";
+import MonacoEditor from "@/components/MonacoEditor.vue";
+import SimpleButton from "@/components/SimpleButton.vue";
+import KeyWordContainer from "@/components/keyword/KeyWordContainer.vue";
+import SectionHeader from "@/components/SectionHeader.vue";
+import SendIcon from "@/icons/SendIcon.vue";
 
-const MONACO_EDITOR_OPTIONS = {
-    automaticLayout: true,
-    formatOnType: true,
-    formatOnPaste: true,
-    wordWrap: true,
-    autoIndentOnPaste: true,
-    autoIndent: true,
-};
-
-const code = ref(`// check your algorithm`);
-const editor = shallowRef();
-const handleMount = editorInstance => {
-    editor.value = editorInstance;
-};
-
-const handleBeforeMount = monaco => {
-    monaco.editor.defineTheme("gruvbox", {
-        base: 'vs-dark',
-        inherit: true,
-        rules: [
-            {token: '', foreground: '#EBDBB2', background: '#282828'},
-            {token: 'comment', foreground: '#928374', fontStyle: 'italic'},
-            {token: 'keyword', foreground: '#FB4934'},
-            {token: 'number', foreground: '#D3869B'},
-            {token: 'string', foreground: '#B8BB26'},
-            {token: 'type', foreground: '#FABD2F'},
-            {token: 'delimiter', foreground: '#EBDBB2'},
-        ],
-        colors: {
-            'editor.background': '#282828',
-            'editor.foreground': '#ebdbb2',
-            'editorLineNumber.foreground': '#665c54',
-            'editor.selectionBackground': '#3c3836',
-            'editor.lineHighlightBackground': '#32302f',
-            'editorCursor.foreground': '#fbf1c7',
-            'editor.selectionHighlightBackground': '#504945',
-            'editorIndentGuide.background': '#3c3836',
-        },
-    })
-};
-
-
-var isDark = ref(false);
-
-function toggleDark() {
-    isDark.value = !isDark.value;
-    if (isDark.value) {
-        document.body.setAttribute("dark", "");
-    } else {
-        document.body.removeAttribute("dark");
-    }
+const code = ref(`// check your algorithm
+function bubble_sort(random_array) {
+    return "skibidi";
 }
+`);
 
 </script>
 
 <template>
     <!-- Whole page -->
-     <div class="w-screen min-h-screen h-screen flex flex-col">
-        <header class="bg-purple-600 h-12">
-            
-            <button @click="toggleDark"> {{ isDark ? "LIGHT" : "DARK" }}</button>
+    <div class="w-screen min-h-screen h-screen flex flex-col bg-orange-50 font-minecraft">
 
-        </header>
+        <!-- Content -->
         <div class="h-full w-screen flex flex-row">
+            <!-- Left block: Editor -->
             <div class="w-1/2 h-full">
-            <vue-monaco-editor
-                v-model:value="code"
-                language="javascript"
-                theme="gruvbox"
-                :options="MONACO_EDITOR_OPTIONS"
-                @mount="handleMount"
-                @beforeMount="handleBeforeMount"
-            />
-          </div>
-            <div class="w-1/2 h-full">
-                <ExampleChart/>
+                <MonacoEditor v-model:value="code"/>
+            </div>
+            <!-- Right block -->
+            <div class="w-1/2 h-full p-3">
+                <!-- Header -->
+                <header class="h-12 border-1 border-black rounded-full p-2 mb-4 flex items-center">
+                    <div class="flex justify-between items-center w-full">
+                        <div class="flex gap-1">
+                            <SimpleButton>O projekcie</SimpleButton>
+                            <SimpleButton>Notacja Wielkiego O</SimpleButton>
+                        </div>
+                        <SimpleButton variant="success"><SendIcon/>Sprawdź algorytm</SimpleButton>
+                    </div>
+                </header>
+
+                <section class="px-4 mb-4">
+                    <SectionHeader>
+                        Analiza algorytmu
+                        <template #subtitle>Podtytul</template>
+                    </SectionHeader>
+                    <div class="flex flex-row gap-4 justify-between">
+                        <div class="bg-red-400 p-0 rounded-xl w-full h-72">
+                            <ExampleChart/>
+                        </div>
+                        <div class="flex flex-col items-center justify-center h-72">
+                            <div class="bg-indigo-400 h-72 w-96 rounded-xl flex items-center justify-center flex-col">
+                                <h4 class="mb-8 text-5xl font-bold">Wynik</h4>
+                                <p class="font-mono font-bold text-3xl mb-8 p-4 bg-indigo-500 rounded-xl select-all">
+                                    O(x^3)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+                <section class="px-4 mb-4">
+                    <SectionHeader>Słowa kluczowe</SectionHeader>
+                    <KeyWordContainer/>
+                </section>
+
             </div>
         </div>
-     </div>
+
+        <footer class="h-8 w-full bg-black"></footer>
+
+        <!-- End of whole page-->
+    </div>
 </template>
